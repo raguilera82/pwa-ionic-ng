@@ -25,7 +25,18 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+    browsers: [process.env.CI ? 'ChromeCI' : 'Chrome'],
+    singleRun: false,
+    customLaunchers: {
+      ChromeCI: {
+        base: 'ChromiumHeadless',
+        flags: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-gpu',
+          '--disable-software-rasterizer'
+        ]
+      }
+    }
   });
 };
